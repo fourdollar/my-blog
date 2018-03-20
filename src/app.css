@@ -1,0 +1,80 @@
+#app {
+    font-family: Helvetica, sans-serif;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+body {
+  margin: 0;
+}
+
+body a:hover{
+  color: #4285f4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body a {
+  color: #4c4c4c;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+}
+
+#Main {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* -----------------header------------------- */
+.header-main {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff;
+  height: 75px;
+  line-height: 75px;
+  box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+  z-index: 200;
+}
+
+.header-main .header-logo {
+  float: left;
+  margin: 0 0 0 15px;
+  font-family: "Roboto",sans-serif;
+  font-size: 20px;
+  position: absolute;
+}
+
+.header-main .header-logo img {
+  width: 50px;
+  -webkit-border-radius: 25px;
+}
+
+.header-main .header-nav {
+  float: right;
+  height: 75px;
+  top: 0;
+  width: auto;
+  background: #ffffff;
+  list-style: none;
+  margin: 0;
+  overflow: scroll;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  z-index: 300;
+}
+
+.header-nav ul li {
+  margin: 0 36px 0 0;
+  display: inline-block;
+  line-height: 74px;
+  text-transform: uppercase;
+}
+
+/* -----------------header------------------- */
