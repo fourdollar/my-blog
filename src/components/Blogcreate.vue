@@ -16,7 +16,9 @@
         </ul>
       </div>
     </header>
-    <h1>{{ msg }}</h1>
+    <div class="main-creater">
+      <h1>{{ msg }}</h1>
+    </div>
   </div>
 </template>
 
@@ -46,6 +48,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.main-creater {
+  margin-top: 75px;
+  padding: 30px;
 }
 
 </style>

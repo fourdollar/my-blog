@@ -9,7 +9,7 @@
         <ul>
           <!-- <li @click="goCreatePage">Create</li> -->
           <li><a href="#/blogcreate">Create</a></li>
-          <li><a href="#/visualization">D3</a></li>
+          <li><a href="#/map">Map</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#smallapp">Apps</a></li>
           <li><a href="#about">About</a></li>
@@ -18,8 +18,10 @@
     </header>
     <div class="top-wrapper">
       <div class="container">
-        <h1>冯思源的博客<br>Hello World</h1>
-        <p>编程初学者<br>powered by vue.js and python</p>
+        <span style="font-size:50px;">Welcome to my World</span>
+        <p>program rookie<br>powered by vue.js and python</p>
+        <el-button round @click="signupFormVisible = true">注册</el-button>
+        <el-button round @click="loginFormVisible = true">登陆</el-button>
       </div>
     </div>
     <div class="container">
@@ -88,6 +90,34 @@
         </ul>
       </div>
     </footer>
+
+    <el-dialog id="signup-modal" title="用户注册" :visible.sync="signupFormVisible" width="25%" center>
+      <el-form :model="form">
+        <el-form-item label="用户名" :label-width="formLabelWidth">
+          <el-input v-model="form.name" type="text" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" :label-width="formLabelWidth">
+          <el-input v-model="form.password" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="success" @click="signupFormVisible = false">注册</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog id="signup-modal" title="用户登陆" :visible.sync="loginFormVisible" width="25%" center>
+      <el-form :model="form">
+        <el-form-item label="用户名" :label-width="formLabelWidth">
+          <el-input v-model="form.name" type="text" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" :label-width="formLabelWidth">
+          <el-input v-model="form.password" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="success" @click="loginFormVisible = false">注册</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -96,7 +126,14 @@ export default {
   name: 'Main',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      signupFormVisible: false,
+      loginFormVisible: false,
+      form: {
+        name: '',
+        password: ''
+      },
+      formLabelWidth: '60px'
     }
   },
   methods: {
@@ -143,38 +180,25 @@ export default {
   -webkit-border-radius: 25px;
 }
 
-.header-main .header-nav {
-  float: right;
-  height: 75px;
-  top: 0;
-  width: auto;
-  background: #ffffff;
-  list-style: none;
-  margin: 0;
-  overflow: scroll;
-  padding: 0;
-  position: fixed;
-  right: 0;
-  z-index: 300;
-}
-
 .header-nav ul li {
   margin: 0 36px 0 0;
   display: inline-block;
   line-height: 74px;
   text-transform: uppercase;
 }
+/* -----------------header------------------- */
 
 .top-wrapper {
   margin-top: 75px;
   z-index: 100;
-  padding: 180px 0 100px 0;
+  height: 500px;
+  padding: 100px;
   background-image: url(../assets/top.png);
+  background-position:center;
   background-size: cover;
   color: white;
   text-align: center;
 }
-/* -----------------header------------------- */
 
 /* -----------------blog------------------- */
 .each-post .post-time {
@@ -266,4 +290,10 @@ footer {
   text-decoration: none;
   text-transform: uppercase;
 }
+/* -----------------modal------------------- */
+.el-dialog--center .el-dialog__body {
+    text-align: initial;
+    padding: 25px 25px 0px;
+}
+/* -----------------modal------------------- */
 </style>

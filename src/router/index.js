@@ -26,11 +26,6 @@ export default new Router({
       component: Blog
     },
     {
-      path: '/visualization',
-      name: 'Visualization',
-      component: Visualization
-    },
-    {
       name: 'Basic map: html tooltip & events',
       path: '/map',
       folder: true,

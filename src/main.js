@@ -3,11 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.css'
 
 Vue.config.productionTip = false
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
+Vue.use(ElementUI);
 
 /* eslint-disable no-new */
 new Vue({
