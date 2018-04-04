@@ -101,7 +101,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="success" @click="signupFormVisible = false">注册</el-button>
+        <el-button type="success" @click="addUser">注册</el-button>
       </div>
     </el-dialog>
 
@@ -115,7 +115,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="success" @click="loginFormVisible = false">注册</el-button>
+        <el-button type="success" @click="loginFormVisible = false">登陆</el-button>
       </div>
     </el-dialog>
   </div>
@@ -140,6 +140,17 @@ export default {
     goCreatePage () {
       this.$router.push({
         path: '/blogcreate'
+      })
+    },
+    addUser() {
+      var name = this.form.name;
+      var age = this.form.password;
+      this.$http.post('/api/user/addUser', {
+        username: name,
+        age: age
+      },{}).then((response) => {
+        console.log(response);
+        this.signupFormVisible = false;
       })
     }
   }
