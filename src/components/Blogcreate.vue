@@ -9,7 +9,7 @@
         <ul>
           <!-- <li @click="goCreatePage">Create</li> -->
           <li><a href="#/blogcreate">Create</a></li>
-          <li><a href="#/visualization">D3</a></li>
+          <li><a href="#/map">Map</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#smallapp">Apps</a></li>
           <li><a href="#about">About</a></li>

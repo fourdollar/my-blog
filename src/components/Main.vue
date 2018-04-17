@@ -20,8 +20,6 @@
       <div class="container">
         <span style="font-size:50px;">Welcome to my World</span>
         <p>program rookie<br>powered by vue.js and python</p>
-        <el-button round @click="signupFormVisible = true">注册</el-button>
-        <el-button round @click="loginFormVisible = true">登陆</el-button>
       </div>
     </div>
     <div class="container">
@@ -159,7 +157,7 @@ export default {
 
 <style>
 #Main {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family:'Muli', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -181,7 +179,7 @@ export default {
 .header-main .header-logo {
   float: left;
   margin: 0 0 0 15px;
-  font-family: "Roboto",sans-serif;
+  font-family:'Muli', Arial, sans-serif;
   font-size: 20px;
   position: absolute;
 }
@@ -202,7 +200,7 @@ export default {
 .top-wrapper {
   margin-top: 75px;
   z-index: 100;
-  height: 500px;
+  height: 600px;
   padding: 100px;
   background-image: url(../assets/top.png);
   background-position:center;

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Main from '../components/Main'
 import Blogcreate from '../components/Blogcreate'
 import Blog from '../components/Blog'
+import Login from '../components/Login'
 import Visualization from '../components/Visualization'
 import Map from '../d3-components/basic-map-tooltip/index'
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/map',
       folder: true,
       component: Map
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
