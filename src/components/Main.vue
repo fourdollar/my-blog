@@ -270,7 +270,7 @@ h1, h2 {
   font-weight: normal;
 }
 
-section {
+#Main section {
   padding: 100px;
 }
 

@@ -3,11 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.css'
 
 Vue.config.productionTip = false
+Vue.prototype.$axios = axios;
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
 Vue.use(ElementUI);
