@@ -1,7 +1,7 @@
 <template>
   <div id="Login">
     <header class="login-nav">
-      <div class="container">
+      <div class="logincontainer">
         <div class="nav-left">
           <img src="../assets/favicon.png" alt="">
           <a @click="goTopPage">Fourdollar's World</a>
@@ -16,7 +16,7 @@
     </header>
     <div class="login-fullpage">
       <div class="login-content">
-        <div class="container">
+        <div class="logincontainer">
           <div class="row">
             <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
               <form class="login-form" action="" method="" v-if="loginVisible">
@@ -36,7 +36,7 @@
                     </div>
                   </div>
                   <div class="card-footer text-center">
-                      <button type="submit" class="btn btn-fill btn-wd " @click="login">Let's go</button>
+                      <button type="submit" class="btn btn-fill btn-wd " @click.prevent="login">Let's go</button>
                       <div class="forgot">
                           <a href="#" style="color: #68B3C8;">Forgot your password?</a>
                       </div>
@@ -76,7 +76,7 @@
         </div>
       </div>
       <footer class="footer footer-transparent">
-          <div class="container">
+          <div class="logincontainer">
               <div class="copyright">
                   © 2018, made with <i class="fa fa-heart heart"></i> by <a href="https://github.com/fourdollar">SIYUAN FENG</a>
               </div>
@@ -99,9 +99,10 @@ export default {
       wronglogin: false,
       loginVisible: true,
       registerVisible: false,
+      path:this.$router.currentRoute.path,
       loginForm: {
-          username: 'admin',
-          password: '123123'
+          username: '',
+          password: ''
       },
       registerForm:{
         username: '',
@@ -122,18 +123,20 @@ export default {
       this.lore = !this.lore
       this.wronglogin = false;
     },
-    register(){
+    register(){ //用户注册
       var url = '/api/user/addUser';
       var params = this.registerForm;
       req.put(url, params)
         .then(res => {
             console.log(res);
+            // 用户名存在的时候出错警告
             if (res.data == '用户名存在') {
               this.$message({
                 message: '用户名存在',
-                type: 'success'
+                type: 'warning'
               });
             }else {
+              //用户名没有重名时，注册成功
               console.log('ユーザー登録しました。');
               this.showregister();
               this.$message({
@@ -150,7 +153,7 @@ export default {
             }
         })
     },
-    login(){
+    login(){ //登录
       var url = '/api/user/getUser';
       var params = this.loginForm;
       req.post(url, params)
@@ -158,12 +161,15 @@ export default {
           if (res.data[0].password == this.loginForm.password) {
             console.log('登陆成功，ID: ' + res.data[0].username);
             localStorage.setItem('ms_username',this.loginForm.username);
+            if (res.data[0].username == 'admin') {
+              this.$router.push('/dashboard');
+            } else {
+              this.$router.push('/main');
+            }
           }else {
             this.wronglogin = true;
             this.refresh();
           }
-
-          // this.$router.push('/main');
         })
         .catch(e => {
             if (e.response) {
@@ -192,6 +198,12 @@ export default {
     //         }
     //     });
     // }
+  },
+  watch:{
+    '$route' (to, from) {
+      // 对路由变化作出响应...
+      this.path = this.$router.currentRoute.path
+    }
   }
 }
 </script>
@@ -210,6 +222,14 @@ export default {
 }
 #Login a:hover{
   color: #e5e5e5;
+}
+
+.logincontainer{
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width:80%;
 }
 
 .login-nav{
