@@ -33,6 +33,7 @@
                       <label>Password</label>
                       <input type="password" placeholder="Password" v-model="loginForm.password" class="form-control input-no-border">
                       <p v-if="wronglogin" style="color:red;">账号或密码错误</p>
+                      <p v-if="nouser" style="color:red;">用户不存在</p>
                     </div>
                   </div>
                   <div class="card-footer text-center">
@@ -63,7 +64,7 @@
                     </div>
                     <div class="form-group">
                       <label>Password-Comfirm</label>
-                      <input type="password" placeholder="Password Confirmation" class="form-control input-no-border">
+                      <input type="password" v-model="pwcomfirm" placeholder="Password Confirmation" class="form-control input-no-border">
                     </div>
                   </div>
                   <div class="card-footer text-center">
@@ -97,6 +98,7 @@ export default {
       msg: 'Login Page',
       lore: true,
       wronglogin: false,
+      nouser: false,
       loginVisible: true,
       registerVisible: false,
       path:this.$router.currentRoute.path,
@@ -108,7 +110,8 @@ export default {
         username: '',
         email:'',
         password: ''
-      }
+      },
+      pwcomfirm:''
     }
   },
   methods: {
@@ -122,6 +125,7 @@ export default {
       this.registerVisible = !this.registerVisible
       this.lore = !this.lore
       this.wronglogin = false;
+      this.nouser = false;
     },
     register(){ //用户注册
       var url = '/api/user/addUser';
@@ -143,6 +147,7 @@ export default {
                 message: '注册成功',
                 type: 'success'
               });
+              this.refresh();
             }
         })
         .catch(e => {
@@ -158,17 +163,22 @@ export default {
       var params = this.loginForm;
       req.post(url, params)
         .then(res => {
-          if (res.data[0].password == this.loginForm.password) {
-            console.log('登陆成功，ID: ' + res.data[0].username);
-            localStorage.setItem('ms_username',this.loginForm.username);
-            if (res.data[0].username == 'admin') {
-              this.$router.push('/dashboard');
-            } else {
-              this.$router.push('/main');
-            }
-          }else {
-            this.wronglogin = true;
+          if (res.data.code == '-200') {
+            this.nouser = true;
             this.refresh();
+          } else {
+            if (res.data.password == this.loginForm.password) {
+              console.log('登陆成功，ID: ' + res.data[0].username);
+              localStorage.setItem('ms_username',this.loginForm.username);
+              if (res.data.username == 'admin') {
+                this.$router.push('/dashboard');
+              } else {
+                this.$router.push('/main');
+              }
+            } else {
+              this.wronglogin = true;
+              this.refresh();
+            }
           }
         })
         .catch(e => {
@@ -185,6 +195,7 @@ export default {
       this.registerForm.username = '';
       this.registerForm.email = '';
       this.registerForm.password = '';
+      this.pwcomfirm = '';
     }
     // // 例子里面的提交
     // submitForm(formName) {

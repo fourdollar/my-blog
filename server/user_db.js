@@ -39,10 +39,10 @@ var insert = function(params, callback) {
 // mysql数据库连接配置
 // module.exports = {
 //     mysql: {
-//         host: 'localhost',
-//         user: 'root',
+//         host: 'mybloginstance.cfkhlvoutd9s.ap-northeast-1.rds.amazonaws.com',
+//         user: 'fengsiyuan',
 //         password: 'ziqing2013',
-//         database: 'firstdb',
+//         database: 'blogdb',
 //         port: '3306'
 //     }
 // }
