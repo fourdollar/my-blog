@@ -159,23 +159,25 @@ export default {
         })
     },
     login(){ //登录
+      this.wronglogin = false;
+      this.nouser = false;
       var url = '/api/user/getUser';
       var params = this.loginForm;
       req.post(url, params)
         .then(res => {
-          if (res.data.code == '-200') {
+          if (res.data == '用户不存在') {
             this.nouser = true;
             this.refresh();
           } else {
-            if (res.data.password == this.loginForm.password) {
-              console.log('登陆成功，ID: ' + res.data[0].username);
+            if (res.data == '登陆成功') {
+              console.log('登陆成功');
               localStorage.setItem('ms_username',this.loginForm.username);
-              if (res.data.username == 'admin') {
+              if (params.username == 'admin') {
                 this.$router.push('/dashboard');
               } else {
                 this.$router.push('/main');
               }
-            } else {
+            } else if (res.data == '密码错误') {
               this.wronglogin = true;
               this.refresh();
             }

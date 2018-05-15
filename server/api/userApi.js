@@ -5,6 +5,7 @@ var userSQL = require('../db/usersql');
 
 var express = require('express');
 var router = express.Router();
+var crypto = require('crypto');
 
 var pool = mysql.createPool( dbConfig.mysql );
 // 响应一个JSON数据
@@ -15,12 +16,15 @@ var responseJSON = function (res, ret) {
   } else {
     res.json(ret);
 }};
+
 // 添加用户
 router.put('/addUser', function(req, res, next) {
   // 从连接池获取连接
   pool.getConnection(function(err, connection) {
     // 获取前台页面传过来的参数
     var params = req.body;
+    var md5 = crypto.createHash('md5');
+    var password = md5.update(req.body.password).digest('hex');
     // 用户名检查
     connection.query(userSQL.queryByName, params.username, function(err, data) {
       if (err) {
@@ -31,7 +35,7 @@ router.put('/addUser', function(req, res, next) {
           console.log('用户名存在:',data[0].username);
           res.send('用户名存在');
         }else {
-          connection.query(userSQL.insert, [params.username,params.password,params.email], function(err, result) {
+          connection.query(userSQL.insert, [params.username,password,params.email], function(err, result) {
             if (err) {
                //エラー処理
                return console.log('データーベース接続エラー', err);
@@ -58,18 +62,33 @@ router.post('/getUser', function(req, res) {
   pool.getConnection(function(err, connection) {
     // 获取前台页面传过来的参数
     var params = req.body;
+    var md5 = crypto.createHash('md5');
+    var password = md5.update(params.password).digest('hex');
     connection.query(userSQL.queryByName, params.username, function(err, result) {
       if (err) {
          //エラー処理
          return console.log('データーベース接続エラー', err);
       }else {
-        var getuser = result[0];
-        responseJSON(res, getuser);
+        //检查用户是否存在
+        if (result.length == 0) {
+          console.log(params.username,'  用户不存在');
+          res.send('用户不存在');
+        }else {
+          //检查密码是否一致
+          if (result[0].password !== password) {
+            console.log(params.username,'  密码错误');
+            res.send('密码错误');
+          }else {
+            console.log(result[0].username,'  登陆成功');
+            res.send('登陆成功');
+          }
+        }
     		connection.release();
       }
     });
   });
 });
+
 
 // var user_db = require('../user_db');
 //
