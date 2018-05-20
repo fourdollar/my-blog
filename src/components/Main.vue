@@ -87,34 +87,6 @@
         </ul>
       </div>
     </footer>
-
-    <el-dialog id="signup-modal" title="用户注册" :visible.sync="signupFormVisible" width="25%" center>
-      <el-form :model="form">
-        <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" type="text" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" :label-width="formLabelWidth">
-          <el-input v-model="form.password" type="password"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="success" @click="addUser">注册</el-button>
-      </div>
-    </el-dialog>
-
-    <el-dialog id="signup-modal" title="用户登陆" :visible.sync="loginFormVisible" width="25%" center>
-      <el-form :model="form">
-        <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" type="text" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" :label-width="formLabelWidth">
-          <el-input v-model="form.password" type="password"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="success" @click="loginFormVisible = false">登陆</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -124,30 +96,13 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      signupFormVisible: false,
-      loginFormVisible: false,
-      form: {
-        name: '',
-        password: ''
-      },
       formLabelWidth: '60px'
     }
   },
   methods: {
     goCreatePage () {
       this.$router.push({
-        path: '/blogcreate'
-      })
-    },
-    addUser() {
-      var name = this.form.name;
-      var age = this.form.password;
-      this.$http.post('/api/user/addUser', {
-        username: name,
-        age: age
-      },{}).then((response) => {
-        console.log(response);
-        this.signupFormVisible = false;
+        path: '/dashboard'
       })
     }
   }
