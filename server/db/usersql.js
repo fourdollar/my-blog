@@ -1,8 +1,8 @@
 var UserSQL = {
-                insert:'INSERT INTO user(username, password, email) VALUES(?,?,?)',
-              	update:'update user set username=?, password=? , email=? where id=?',
-              	delete: 'delete from user where id=?',
-              	queryByName: 'select * from user where username=?',
-              	queryAll: 'select * from user'
+                insert:'INSERT INTO users(username, password, email) VALUES(?,?,?)',
+              	update:'update users set username=?, password=? , email=? where id=?',
+              	delete: 'delete from users where id=?',
+              	queryByName: 'select * from users where username=?',
+              	queryAll: 'select * from users'
               };
  module.exports = UserSQL;

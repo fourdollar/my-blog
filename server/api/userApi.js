@@ -7,7 +7,10 @@ var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
 
-var pool = mysql.createPool( dbConfig.mysql );
+// AWS的时候用prod
+var pool = mysql.createPool( dbConfig );
+// var pool = mysql.createPool( dbConfig.prod );
+
 // 响应一个JSON数据
 var responseJSON = function (res, ret) {
    if(typeof ret === 'undefined') {
@@ -45,7 +48,7 @@ router.put('/addUser', function(req, res, next) {
                 msg:'增加成功'
               };
             }
-            console.log('创建用户：'+params.username);
+            console.log('创建用户成功：'+params.username);
             // 以json形式，把操作结果返回给前台页面
             responseJSON(res, result);
           });
