@@ -3,8 +3,9 @@
 var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
-var config  = require(__dirname + '/../db/db.json')['dev'];
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+var config  = require(__dirname + '/../db/dbconfig.js');
+config = config.dev;
+var sequelize = new Sequelize(config.database, config.user, config.password, config);
 var db        = {};
 
 fs
@@ -22,7 +23,7 @@ Object.keys(db).forEach(function(modelName) {
     db[modelName].associate(db);
   }
 });
-console.log(db);
+console.log('init sequelize...');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

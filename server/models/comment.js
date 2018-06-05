@@ -13,8 +13,9 @@ module.exports = function(sequelize, DataTypes) {
     post_id: DataTypes.INTEGER,
     avatar: DataTypes.STRING,
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-  });
+  }, {
+          timestamps: false
+      });
 
   return Comment;
 };
-

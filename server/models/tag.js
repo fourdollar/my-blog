@@ -7,8 +7,9 @@ module.exports = function(sequelize, DataTypes) {
     status: DataTypes.INTEGER,
     count: DataTypes.INTEGER,
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-  });
+  }, {
+          timestamps: false
+      });
 
   return Tag;
 };
-

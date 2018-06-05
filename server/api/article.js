@@ -1,29 +1,42 @@
 var mysql = require('mysql');
-var dbConfig = require('../db/dbconfig');
-var userSQL = require('../db/usersql');
-
+var models = require('../models');
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
 
-var pool = mysql.createPool( dbConfig.mysql );
-// 响应一个JSON数据
-var responseJSON = function (res, ret) {
-   if(typeof ret === 'undefined') {
-        res.json({     code:'-200',     msg: '操作失败'
-      });
-  } else {
-    res.json(ret);
-}};
+var now = Date.now();
+var params = {
+  "title" : "hello world",
+  "created" : now,
+  "content" : "hello",
+  "description" : "",
+  "status" : 1,
+  "clicknum" : 2,
+  "tags" : "html"
+}
 
 
 // 发布文章
 router.post('/article', function(req, res) {
-
+  models.blog.create(params)
+  .then(function (p) {
+      console.log('created.' + JSON.stringify(p));
+  }).catch(function (err) {
+      console.log('failed: ' + err);
+  });
 });
 
 
 // 获取文章
 router.get('/getarticle', function(req, res) {
-  
+  models.blog.findAll()
+   .then(function (articles) {
+     if (articles.length>0) {
+       for (var i in articles) {
+         console.log(articles[i].dataValues.title);
+       }
+     }
+   }).catch(function (err) {
+       // error
+   });
 });

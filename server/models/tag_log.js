@@ -5,8 +5,9 @@ module.exports = function(sequelize, DataTypes) {
     //id:{type: DataTypes.INTEGER, autoIncrement: true},
     last_post_id: DataTypes.INTEGER,
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-  });
+  }, {
+          timestamps: false
+      });
 
   return Tag_log;
 };
-

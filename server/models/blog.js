@@ -2,8 +2,11 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Blog = sequelize.define("blog", {
-    //id:{type: DataTypes.INTEGER, autoIncrement: true},
-    org_id: DataTypes.STRING,
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     title: DataTypes.STRING,
     tags: DataTypes.STRING,
     description: DataTypes.STRING,
@@ -12,7 +15,9 @@ module.exports = function(sequelize, DataTypes) {
     content_html: DataTypes.TEXT,
     content: DataTypes.TEXT,
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-  });
+  }, {
+          timestamps: false
+      });
 
   return Blog;
 };
