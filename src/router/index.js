@@ -1,10 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Main from '../components/Main'
-// import Blogcreate from '../components/Blogcreate'
-// import Blog from '../components/Blog'
-import Login from '../components/Login'
-// import Visualization from '../components/Visualization'
 import Map from '../d3-components/basic-map-tooltip/index'
 
 Vue.use(Router)
@@ -13,7 +8,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/login'
+            redirect: '/main'
         },
         {
             path: '/',
@@ -94,18 +89,14 @@ export default new Router({
             path: '/main',
             component: resolve => require(['../components/Main.vue'], resolve)
         },
-        // {
-        //     path: '/login',
-        //     component: resolve => require(['../components/Login.vue'], resolve)
-        // },
         {
             path: '/login',
-            component: Login
+            component: resolve => require(['../components/Login.vue'], resolve)
         },
-        {
-            path: '/blog',
-            component: resolve => require(['../components/Blog.vue'], resolve)
-        },
+        // {
+        //     path: '/login',
+        //     component: Login
+        // },
         {
           name: 'Basic map: html tooltip & events',
           path: '/map',

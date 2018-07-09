@@ -1,93 +1,52 @@
 <template>
   <div id="Main">
-    <header class="header-main">
-      <div class="header-logo">
-        <img src="../assets/favicon.png" alt="">
-        <a href="#/">Fourdollar's World</a>
-      </div>
-      <div class="header-nav">
-        <ul>
-          <!-- <li @click="goCreatePage">Create</li> -->
-          <li><a href="#/map">Map</a></li>
-          <li><a href="#blog">Blog</a></li>
-          <li><a href="#smallapp">Apps</a></li>
-          <li><a href="#about">About</a></li>
-        </ul>
-      </div>
-    </header>
-    <div class="top-wrapper">
-      <div class="container">
-        <span style="font-size:50px;">Welcome to my World</span>
-        <p>program rookie<br>powered by vue.js and python</p>
-      </div>
-    </div>
-    <div class="container">
-      <div class="region-inner">
-        <section id="blog" class="row">
-          <div class="col-md-9">
-            <div class="blogs">
-              <div class="each-post">
-                <h3>blog title</h3>
-                <div class="post-time">
-                  Thursday, March 15, 2018
-                </div>
-                <div class="post-body">
-                  balabalabala
-                </div>
-              </div>
-              <div class="blog-pager">
-
-              </div>
-            </div>
+    <el-row>
+      <el-col :span="9">
+        <div class="grid-content lefthead">
+          <div class="user-info">
+            <img src="../assets/favicon.png" alt="">
+            <a href="#"><h1>冯思源的博客</h1><h2>fourdollar's blog</h2></a>
           </div>
-          <div class="col-md-3 sidebar">
-            <div class="search-box">
-              <input type="text" placeholder="Search Blog" name="" value="">
-            </div>
-            <div class="widget blog-list">
-              <h2>blog list</h2>
-              <div class="blog-list">
-                <ul>
-                  <li><a href="#">第一篇blog</a></li>
-                  <li><a href="#">第二篇blog</a></li>
-                  <li><a href="#">第三篇blog</a></li>
-                </ul>
+          <div class="switchboard">
+            <ul>
+              <li title="回到主页"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+              <li title="地图" @click="goto('map')"><a><i class="fa fa-map-marker" aria-hidden="true"></i></a></li>
+              <li title="登录" @click="goto('login')"><a><i class="fa fa-sign-in" aria-hidden="true"></i></a></li>
+              <li title="github"><a href="https://github.com/fourdollar"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+              <li title="留言板" @click="goto('dashboard')"> <a><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+          <div class="selfintro">
+            <p>30岁的半路出家程序员，爱好吃饭。17年开始学习前端，从javascript,d3.js,vue.js,node.js,python。这里是一个把学习的东西运用的地方。
+              本博客使用了vue+nodejs+mysql</p>
+          </div>
+          <div class="chat">
+
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :span="15">
+        <div class="grid-content bg-purple-light scroll">
+          <div class="blogcontent">
+            <div class="oneblog" v-for="blog in blogcontents">
+              <div class="oneblog-header">
+                <a><h2>{{blog.title}}</h2></a>
+                <p>{{blog.content}}</p>
+                <span>{{blog.date | formatDate}}前发布 | {{blog.comment_n}} 评论</span>
+              </div>
+              <div class="oneblog-image">
+                <img :src="blog.image" alt="No Image">
               </div>
             </div>
-            <div class="widget connect">
-              <address>
-                <strong>Fourdollar, Inc.</strong><br>
-                1355 Market Street, Suite 900<br>
-                San Francisco, CA 94103<br>
-                <abbr title="Phone">P:</abbr> (123) 456-7890
-              </address>
-
-              <address>
-                <strong>Full Name</strong><br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-            </div>
-            <div class="widget recommend" style="border-bottom:0">
-              <p>还没想好</p>
-            </div>
+            <el-button class="nextbtn">下一页</el-button>
           </div>
-        </section>
-        <hr>
-        <section id="smallapp">app</section>
-        <hr>
-        <section id="about">about me</section>
-      </div>
-    </div>
-    <footer>
-      <div class="footer-nav">
-        <ul>
-          <li><a href="#">没想好</a></li>
-          <li><a href="#">没想好</a></li>
-          <li><a href="#">还是没想好</a></li>
-        </ul>
-      </div>
-    </footer>
+        </div>
+      </el-col>
+    </el-row>
+
   </div>
+
 </template>
 
 <script>
@@ -96,167 +55,252 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      formLabelWidth: '60px'
+      haslogin:false,
+      userID:localStorage.getItem("ms_username"),
+      blogcontents:[
+        {
+          "title" : "啦啦啦",
+          "date" : "2017-09-03T02:46:54.000Z",
+          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+          "comment_n" : 0,
+          "image":"./static/img/1.jpg"
+        },
+        {
+          "title" : "hello world",
+          "date" : "2017-10-25T06:01:29.000Z",
+          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+          "comment_n" : 0,
+          "image":"./static/img/1.jpg"
+        },{
+          "title" : "hello world",
+          "date" : "2016-04-25T06:01:29.000Z",
+          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+          "comment_n" : 0,
+          "image":"./static/img/1.jpg"
+        },{
+          "title" : "hello world",
+          "date" : "2018-04-08T06:01:29.000Z",
+          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+          "comment_n" : 0,
+          "image":"./static/img/1.jpg"
+        }]
     }
   },
   methods: {
-    goCreatePage () {
+    goto(where){
       this.$router.push({
-        path: '/dashboard'
+        path: '/'+where
       })
     }
+  },
+  filters:{
+    //过滤发布时间
+    formatDate(time){
+      var date = new Date(time);
+      var now = new Date();
+      var dateDiff = (now-date)/(60 * 60 * 1000);
+      dateDiff = Math.floor(dateDiff);
+      if (dateDiff < 24) {
+        return dateDiff+"小时";
+      }else if (dateDiff>=24 && dateDiff<720) {
+        dateDiff = Math.floor(dateDiff/24);
+        return dateDiff+"天";
+      }else if (dateDiff>=720 && dateDiff<8640) {
+        dateDiff = Math.floor(dateDiff/(24*30));
+        return dateDiff+"个月";
+      }else {
+        dateDiff = Math.floor(dateDiff/(24*30*12));
+        return dateDiff+"年";
+      }
+    }
+  },
+  created:function () {
+    // if (this.userID) {
+    //     this.haslogin=true
+    // }
   }
 }
 </script>
 
 <style>
-#Main {
+#Main{
   font-family:'Muli', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height:100%;
 }
-
-/* -----------------header------------------- */
-.header-main {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #ffffff;
-  height: 75px;
-  line-height: 75px;
-  box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
-  z-index: 200;
-}
-
-.header-main .header-logo {
-  float: left;
-  margin: 0 0 0 15px;
-  font-family:'Muli', Arial, sans-serif;
-  font-size: 20px;
+#Main .el-row {
   position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
-
-.header-main .header-logo img {
-  width: 50px;
-  -webkit-border-radius: 25px;
+#Main a{
+  color: #333;
 }
-
-.header-nav ul li {
-  margin: 0 36px 0 0;
-  display: inline-block;
-  line-height: 74px;
-  text-transform: uppercase;
+/* ==========================左边栏========================== */
+.el-col-9 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }
-/* -----------------header------------------- */
-
-.top-wrapper {
-  margin-top: 75px;
-  z-index: 100;
-  height: 600px;
-  padding: 100px;
-  background-image: url(../assets/top.png);
-  background-position:center;
-  background-size: cover;
-  color: white;
+.lefthead{
+  background-image: url(../assets/huangshan.jpg);
+  background-repeat:no-repeat;
+  background-size:cover;
   text-align: center;
+  opacity: 1;
+  overflow-y: hidden;
+  transition: opacity 1s;
+  color: rgba(255, 255, 255, 0.8);
+}
+.lefthead img{
+    max-width: 100px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 100%;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0px 2px 20px 3px rgba(0, 0, 0, 0.25);
+}
+.user-info{
+  margin-top: 5em;
+}
+.user-info a h1{
+  font-size: 2rem;
+  margin-top: 0.75em;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+.user-info a h2{
+  font-size: 1.8rem;
+  margin-top: 0.375em;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
 }
 
-/* -----------------blog------------------- */
-.each-post .post-time {
-  margin: 20px 0px;
+.switchboard{
+  margin-top: 1.75em;
+  margin-bottom: -0.75em;
 }
-.search-box input {
-  border: 1px solid #eee;
-  color: #212121;
-  color: rgba(0,0,0,.87);
-  font-size: 16px;
-  padding: 8px 8px 8px 40px;
-  width: 200px;
-  font-family: Roboto, sans-serif;
-  background: url(https://www.gstatic.com/images/icons/material/system/1x/search_grey600_24dp.png) 8px center no-repeat;
+.switchboard ul{
+  -webkit-padding-start: 0px;
 }
-
-.sidebar .widget {
-  margin: 0;
-  padding: 15px 0;
-  min-height: 20px;
-  border-bottom: 1px solid #eee;
-  line-height: 1.4;
-}
-
-.sidebar .widget h2 {
-  color: #444;
-  font-family: "Roboto Slab", serif;
-  padding-bottom: 3px;
-  font-size: 18px;
-  line-height: 24px;
-  margin-bottom: 16px;
-  font-weight: 900;
-  display: inline-block;
-  text-decoration: none;
-}
-
-.sidebar .widget h2:before{
-  content: url(https://www.gstatic.com/images/icons/material/system/1x/star_grey600_24dp.png);
+.switchboard ul li{
   position: relative;
-  top: 5px;
-  padding: 0 10px 0 0;
+  display: inline-block;
+  border: 1px solid;
+  border-color: rgba(255, 255, 255, 0.35) rgba(255, 255, 255, 0.45) rgba(255, 255, 255, 0.55);
+  border-radius: 100%;
+  padding: 5px 7px;
+  margin: 0 0.25em;
+  font-size: 1.2rem;
+  letter-spacing: .5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 3px 18px rgba(0, 0, 0, 0.2);
+  transition: .2s;
+  cursor: pointer;
 }
-
-
-
-/* -----------------blog------------------- */
-
-
-#blog{
-  text-align: left;
+.switchboard ul li:hover{
+  background-color: rgba(255, 255, 255, 0.35);
 }
-
-ul {
-  list-style: none;
+.switchboard ul li a{
   margin: 0;
   padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  color: white !important;
 }
 
-h1, h2 {
-  font-weight: normal;
+.selfintro{
+  padding: 0 7.5em;
+  margin-top: 2.5em;
 }
 
-#Main section {
-  padding: 100px;
+.chat{
+  height:45%;
+  padding: 30px 40px;
 }
 
-footer {
-  padding: 24px;
-  background-color: #474747;
-  box-sizing: border-box;
-  color: #ffffff;
-  position: relative;
-  z-index: 98;
-  height: 75px;
+/* ==========================左边栏========================== */
+.el-col-15 {
+  position: absolute;
+  left: 37.5%;
+  top: 0;
+  bottom: 0;
+
 }
-.footer-nav {
-  width: auto;
-  height:27px;
+/* ==========================blog========================== */
+.blogcontent{
+  padding: 4em;
+  text-align: left;
 }
-.footer-nav ul li{
-  float: left;
+.scroll{
+  overflow: scroll;
+}
+.oneblog{
+  padding-top: 2em;
+  padding-bottom: 3.5em;
+  text-align: left;
+  overflow: auto;
+}
+.oneblog .oneblog-header{
   display: inline-block;
-  line-height: 27px;
-  margin: 0 15px 0 0;
+  width: 66.6%;
 }
-.footer-nav a {
-  color: #ccc;
-  font-size: 14px;
-  text-decoration: none;
-  text-transform: uppercase;
+
+.oneblog .oneblog-image{
+  padding-left: 30px;
+  display: inline-block;
+  width: 33.3%;
+  height: 176px;
+  float: right;
 }
-/* -----------------modal------------------- */
-.el-dialog--center .el-dialog__body {
-    text-align: initial;
-    padding: 25px 25px 0px;
+
+.oneblog-image img{
+  height: 176px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 25, 0.1), 0 5px 75px 1px rgba(0, 0, 50, 0.2);
 }
-/* -----------------modal------------------- */
+
+.oneblog a h2{
+  font-size:26px;
+  font-weight:bold;
+  line-height: 1.35;
+  margin-bottom: 0.25em;
+  margin-top: 0;
+}
+
+.oneblog p{
+  font-size:1.85rem;
+  line-height: 1.625;
+  letter-spacing: 0.35px;
+  margin-bottom: 1em;
+}
+
+.oneblog span{
+  color: #888;
+  font-size: 1.4rem;
+}
+
+.blogcontent .nextbtn{
+
+}
+
+/* ==========================blog========================== */
+.grid-content {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  background-color: #fafbff;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
 </style>
