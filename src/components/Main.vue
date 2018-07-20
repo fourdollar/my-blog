@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="9">
         <div class="grid-content lefthead">
-          <div class="user-info">
+          <div class="userinfo">
             <img src="../assets/favicon.png" alt="">
             <a href="#"><h1>冯思源的博客</h1><h2>fourdollar's blog</h2></a>
           </div>
@@ -17,12 +17,10 @@
             </ul>
           </div>
           <div class="selfintro">
-            <p>30岁的半路出家程序员，爱好吃饭。17年开始学习前端，从javascript,d3.js,vue.js,node.js,python。这里是一个把学习的东西运用的地方。
+            <p>30岁的半路出家程序员，爱好吃饭。17年开始学习前端，从JS d3 vue node到python。这里是一个把学习的东西运用的地方。
               本博客使用了vue+nodejs+mysql</p>
           </div>
-          <div class="chat">
-
-          </div>
+          <Chatbot></Chatbot>
         </div>
       </el-col>
 
@@ -50,6 +48,10 @@
 </template>
 
 <script>
+import Chatbot from '@/components/common/Chatbot'
+import axios from 'axios';
+const req = axios.create();
+
 export default {
   name: 'Main',
   data () {
@@ -58,32 +60,34 @@ export default {
       haslogin:false,
       userID:localStorage.getItem("ms_username"),
       blogcontents:[
-        {
-          "title" : "啦啦啦",
-          "date" : "2017-09-03T02:46:54.000Z",
-          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
-          "comment_n" : 0,
-          "image":"./static/img/1.jpg"
-        },
-        {
-          "title" : "hello world",
-          "date" : "2017-10-25T06:01:29.000Z",
-          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
-          "comment_n" : 0,
-          "image":"./static/img/1.jpg"
-        },{
-          "title" : "hello world",
-          "date" : "2016-04-25T06:01:29.000Z",
-          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
-          "comment_n" : 0,
-          "image":"./static/img/1.jpg"
-        },{
-          "title" : "hello world",
-          "date" : "2018-04-08T06:01:29.000Z",
-          "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
-          "comment_n" : 0,
-          "image":"./static/img/1.jpg"
-        }]
+        // {
+        //   "title" : "啦啦啦",
+        //   "date" : "2017-09-03T02:46:54.000Z",
+        //   "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+        //   "comment_n" : 0,
+        //   "image":"./static/img/1.jpg"
+        // },
+        // {
+        //   "title" : "hello world",
+        //   "date" : "2017-10-25T06:01:29.000Z",
+        //   "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+        //   "comment_n" : 0,
+        //   "image":"./static/img/1.jpg"
+        // },{
+        //   "title" : "hello world",
+        //   "date" : "2016-04-25T06:01:29.000Z",
+        //   "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+        //   "comment_n" : 0,
+        //   "image":"./static/img/1.jpg"
+        // },{
+        //   "title" : "hello world",
+        //   "date" : "2018-04-08T06:01:29.000Z",
+        //   "content" : "作为 iOS 11 重磅功能之一的 ARKit 在发布之初就引起了我强烈的兴趣，那段时间我正好也对著名的游戏引擎 Unity 很感兴趣，不满足于制作小游戏的我便开始琢磨如何将 ARKit 和 Unity 结合在一起来实现 AR 效果。",
+        //   "comment_n" : 0,
+        //   "image":"./static/img/1.jpg"
+        // }
+      ],
+        blogcontent:[]
     }
   },
   methods: {
@@ -118,6 +122,34 @@ export default {
     // if (this.userID) {
     //     this.haslogin=true
     // }
+
+  },
+  mounted(){
+    var url = '/api/article/get';
+    req.get(url)
+    .then(res => {
+      for (var i = 0; i < res.data.length; i++) {
+        this.blogcontents.push({
+          "title" : res.data[i].title,
+          "date" : res.data[i].created,
+          "content" : res.data[i].description,
+          "comment_n" : res.data[i].clicknum,
+          "image":res.data[i].image
+        })
+      }
+
+      console.log(this.blogcontent);
+    })
+    .catch(e => {
+        if (e.response) {
+            console.log('/getarticle :', e.response.status, e.response.statusText)
+        } else {
+            console.log('error /getarticle');
+        }
+    })
+  },
+  components: {
+    Chatbot
   }
 }
 </script>
@@ -166,16 +198,16 @@ export default {
     border-radius: 100%;
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0px 2px 20px 3px rgba(0, 0, 0, 0.25);
 }
-.user-info{
+.userinfo{
   margin-top: 5em;
 }
-.user-info a h1{
+.userinfo a h1{
   font-size: 2rem;
   margin-top: 0.75em;
   color: rgba(255, 255, 255, 0.7);
   font-weight: 400;
 }
-.user-info a h2{
+.userinfo a h2{
   font-size: 1.8rem;
   margin-top: 0.375em;
   color: rgba(255, 255, 255, 0.7);
@@ -216,13 +248,10 @@ export default {
 }
 
 .selfintro{
-  padding: 0 7.5em;
+  padding: 0 6.5em;
   margin-top: 2.5em;
-}
-
-.chat{
-  height:45%;
-  padding: 30px 40px;
+  height: 10%;
+  text-align: left;
 }
 
 /* ==========================左边栏========================== */

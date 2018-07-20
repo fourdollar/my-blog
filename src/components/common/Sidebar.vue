@@ -41,9 +41,9 @@
                         title: '基础表格'
                     },
                     {
-                        icon: 'el-icon-message',
+                        icon: 'el-icon-document',
                         index: 'tabs',
-                        title: 'tab选项卡'
+                        title: '博客管理'
                     },
                     {
                         icon: 'el-icon-date',

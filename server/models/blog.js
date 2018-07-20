@@ -16,8 +16,11 @@ module.exports = function(sequelize, DataTypes) {
     content: DataTypes.TEXT,
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
   }, {
-          timestamps: false
-      });
+    timestamps: false,
+    underscored: true,
+    tableName: 'Blog',
+    charset: 'utf8mb4'
+  });
 
   return Blog;
 };

@@ -1,4 +1,6 @@
 const userApi = require('./api/userApi');
+const assistant = require('./api/assistant');
+const article = require('./api/article');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -15,6 +17,8 @@ app.use(cookieParser());
 
 // 后端api路由
 app.use('/api/user', userApi);
+app.use('/api/chat', assistant);
+app.use('/api/article', article);
 
 app.use(session({
     name: 'identityKey',

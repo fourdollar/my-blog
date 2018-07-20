@@ -11,6 +11,7 @@
                 mavonEditor：基于Vue的markdown编辑器。
                 访问地址：<a href="https://github.com/hinesboy/mavonEditor" target="_blank">mavonEditor</a>
             </div>
+            <el-input v-model="blogtitle" class="blogtitle" placeholder="请输入文章标题"></el-input>
             <mavon-editor v-model="content" ref="md" @imgAdd="$imgAdd" @change="change" style="min-height: 600px"/>
             <el-button class="editor-btn" type="primary" @click="submit">提交</el-button>
         </div>
@@ -20,11 +21,15 @@
 <script>
     import { mavonEditor } from 'mavon-editor'
     import 'mavon-editor/dist/css/index.css'
+    import axios from 'axios';
+    var headers = { headers: {} }
+    const req = axios.create();
     export default {
         data: function(){
             return {
                 content:'',
                 html:'',
+                blogtitle:'',
                 configs: {
                 }
             }
@@ -52,9 +57,36 @@
                 this.html = render;
             },
             submit(){
-                console.log(this.content);
                 console.log(this.html);
-                this.$message.success('提交成功！');
+                var url = '/api/article/add';
+                headers.headers = {
+                  'Content-Type': 'application/json; charset=utf-8',
+                }
+                var now = Date.now();
+                var params = {
+                  "title" : this.blogtitle,
+                  "created" : now,
+                  "content" : this.html,
+                  "description" : this.content.substring(0,50),
+                  "status" : 1,
+                  "clicknum" : 2
+                }
+                params = JSON.stringify(params);
+                req.post(url, params, headers)
+                  .then(res => {
+                    this.$message.success('提交成功！');
+                    this.blogtitle="";
+                    this.content="";
+                    this.html="";
+                  })
+                  .catch(e => {
+                      if (e.response) {
+                          console.log('/addarticle :', e.response.status, e.response.statusText)
+                      } else {
+                          console.log('error /addarticle');
+                      }
+                  })
+
             }
         }
     }
@@ -62,5 +94,9 @@
 <style scoped>
     .editor-btn{
         margin-top: 20px;
+    }
+    .blogtitle{
+      box-shadow: 0 0px 4px rgba(0,0,0,0.157), 0 0px 4px rgba(0,0,0,0.227);
+      margin-bottom: 20px;
     }
 </style>

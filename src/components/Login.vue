@@ -90,7 +90,8 @@
 <script>
 var headers = { headers: {} }
 import axios from 'axios';
-const req = axios.create()
+const req = axios.create();
+
 export default {
   name: 'Login',
   data () {

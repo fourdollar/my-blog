@@ -14,8 +14,11 @@ module.exports = function(sequelize, DataTypes) {
     avatar: DataTypes.STRING,
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
   }, {
-          timestamps: false
-      });
+    timestamps: false,
+    underscored: true,
+    tableName: 'Comment',
+    charset: 'utf8mb4'
+  });
 
   return Comment;
 };
