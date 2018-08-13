@@ -6,7 +6,7 @@ var AssistantV1 = require('watson-developer-cloud/assistant/v1'); // watson sdk
 // watson assistant
 require('dotenv').config({silent: true});
 assistant = new AssistantV1({
-    'version': '2018-02-16',
+    'version': '2018-07-10',
     'username': process.env.ASSISTANT_USERNAME || '<username>',
     'password': process.env.ASSISTANT_PASSWORD || '<password>'
   });
@@ -31,6 +31,7 @@ router.post('/message', function (req, res) {
     if (err) {
       return res.status(err.code || 500).json(err);
     }
+    console.log(data);
     return res.json(updateMessage(payload, data));
   });
 });

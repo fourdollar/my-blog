@@ -6,7 +6,8 @@
           <div class="segments load" v-for="(message,index) in chatcontent">
             <div :class="[message.from , index === chatcontent.length-1 ? 'latest' : '' ,index === chatcontent.length-1 ? 'latestuser' : '' ]">
               <div class="message-inner">
-                <p>{{message.text}}</p>
+                <p v-if="message.text">{{message.text}}</p>
+                <img :src="message.img" v-if="message.img" alt="">
               </div>
             </div>
           </div>
@@ -76,10 +77,22 @@ export default {
       req.post(messageEndpoint, params, headers)
       .then(res => {
         this.responsePayload = res.data;
-        this.chatcontent.push({
-          from:"from-watson",
-          text:res.data.output.text[0]
-        })
+        if (res.data.output.generic) {
+          var responsedata = res.data.output.generic;
+          for (var i = 0; i < responsedata.length; i++) {
+            if (responsedata[i].response_type == "text") {
+              this.chatcontent.push({
+                from:"from-watson",
+                text:responsedata[i].text
+              })
+            }else if (responsedata[i].response_type == "image") {
+              this.chatcontent.push({
+                from:"from-watson",
+                img:responsedata[i].source
+              })
+            }
+          }
+        }
         var self=this;
         setTimeout(function () {
             self.scrollToChatBottom("watson");
